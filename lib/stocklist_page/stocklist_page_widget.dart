@@ -1,5 +1,4 @@
-import '../art_piece_page/art_piece_page_widget.dart';
-import '../backend/api_requests/api_calls.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../main.dart';
@@ -10,12 +9,10 @@ import 'package:google_fonts/google_fonts.dart';
 class StocklistPageWidget extends StatefulWidget {
   StocklistPageWidget({
     Key key,
-    this.departmentId,
-    this.displayName,
+    this.indexParam,
   }) : super(key: key);
 
-  final int departmentId;
-  final String displayName;
+  final String indexParam;
 
   @override
   _StocklistPageWidgetState createState() => _StocklistPageWidgetState();
@@ -54,7 +51,7 @@ class _StocklistPageWidgetState extends State<StocklistPageWidget> {
           ),
         ),
         title: Text(
-          'indexName',
+          widget.indexParam,
           style: FlutterFlowTheme.bodyText2.override(
             fontFamily: 'Source Sans Pro',
             color: FlutterFlowTheme.secondaryColor,
@@ -146,112 +143,144 @@ class _StocklistPageWidgetState extends State<StocklistPageWidget> {
             ],
           ),
           Expanded(
-            child: ListView(
-              padding: EdgeInsets.zero,
-              scrollDirection: Axis.vertical,
-              children: [
-                Container(
-                  height: 90,
-                  decoration: BoxDecoration(
-                    color: Colors.transparent,
-                  ),
-                  child: Container(
-                    height: 90,
-                    decoration: BoxDecoration(
-                      color: Colors.transparent,
+            child: StreamBuilder<List<TickersRecord>>(
+              stream: queryTickersRecord(
+                queryBuilder: (tickersRecord) =>
+                    tickersRecord.where('index', isEqualTo: widget.indexParam),
+                limit: 10,
+              ),
+              builder: (context, snapshot) {
+                // Customize what your widget looks like when it's loading.
+                if (!snapshot.hasData) {
+                  return Center(child: CircularProgressIndicator());
+                }
+                List<TickersRecord> listViewTickersRecordList = snapshot.data;
+                // Customize what your widget looks like with no query results.
+                if (snapshot.data.isEmpty) {
+                  return Container(
+                    height: 100,
+                    child: Center(
+                      child: Text('No results.'),
                     ),
-                    child: Card(
-                      clipBehavior: Clip.antiAliasWithSaveLayer,
-                      color: Colors.white,
-                      shape: RoundedRectangleBorder(
-                        borderRadius: BorderRadius.circular(8),
+                  );
+                }
+                return ListView.builder(
+                  padding: EdgeInsets.zero,
+                  scrollDirection: Axis.vertical,
+                  itemCount: listViewTickersRecordList.length,
+                  itemBuilder: (context, listViewIndex) {
+                    final listViewTickersRecord =
+                        listViewTickersRecordList[listViewIndex];
+                    return Container(
+                      height: 90,
+                      decoration: BoxDecoration(
+                        color: Colors.transparent,
                       ),
-                      child: Padding(
-                        padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
-                        child: Row(
-                          mainAxisSize: MainAxisSize.max,
-                          children: [
-                            Expanded(
-                              child: Padding(
-                                padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
-                                child: SingleChildScrollView(
-                                  child: Column(
-                                    mainAxisSize: MainAxisSize.max,
-                                    crossAxisAlignment:
-                                        CrossAxisAlignment.start,
-                                    children: [
-                                      Text(
-                                        'Hello World',
-                                        style: FlutterFlowTheme.title2.override(
-                                          fontFamily: 'Lato',
-                                        ),
-                                      ),
-                                      Padding(
-                                        padding:
-                                            EdgeInsets.fromLTRB(0, 3, 0, 6),
-                                        child: Row(
-                                          mainAxisSize: MainAxisSize.max,
-                                          children: [
-                                            Padding(
-                                              padding: EdgeInsets.fromLTRB(
-                                                  0, 0, 6, 0),
-                                              child: Text(
-                                                'previousClose',
-                                                style: FlutterFlowTheme
-                                                    .bodyText2
-                                                    .override(
-                                                  fontFamily: 'Source Sans Pro',
-                                                  color: FlutterFlowTheme
-                                                      .tertiaryColor,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
-                                                ),
-                                              ),
+                      child: Container(
+                        height: 90,
+                        decoration: BoxDecoration(
+                          color: Colors.transparent,
+                        ),
+                        child: Card(
+                          clipBehavior: Clip.antiAliasWithSaveLayer,
+                          color: Colors.white,
+                          shape: RoundedRectangleBorder(
+                            borderRadius: BorderRadius.circular(8),
+                          ),
+                          child: Padding(
+                            padding: EdgeInsets.fromLTRB(10, 5, 10, 5),
+                            child: Row(
+                              mainAxisSize: MainAxisSize.max,
+                              children: [
+                                Expanded(
+                                  child: Padding(
+                                    padding: EdgeInsets.fromLTRB(12, 0, 0, 0),
+                                    child: SingleChildScrollView(
+                                      child: Column(
+                                        mainAxisSize: MainAxisSize.max,
+                                        crossAxisAlignment:
+                                            CrossAxisAlignment.start,
+                                        children: [
+                                          Text(
+                                            listViewTickersRecord.ticker,
+                                            style: FlutterFlowTheme.title2
+                                                .override(
+                                              fontFamily: 'Lato',
                                             ),
-                                            Expanded(
-                                              child: AutoSizeText(
-                                                'currentPrice',
-                                                style: FlutterFlowTheme
-                                                    .bodyText2
-                                                    .override(
-                                                  fontFamily: 'Source Sans Pro',
-                                                  color: FlutterFlowTheme
-                                                      .primaryColor,
-                                                  fontSize: 14,
-                                                  fontWeight: FontWeight.normal,
+                                          ),
+                                          Padding(
+                                            padding:
+                                                EdgeInsets.fromLTRB(0, 3, 0, 6),
+                                            child: Row(
+                                              mainAxisSize: MainAxisSize.max,
+                                              children: [
+                                                Padding(
+                                                  padding: EdgeInsets.fromLTRB(
+                                                      0, 0, 6, 0),
+                                                  child: Text(
+                                                    'previousClose',
+                                                    style: FlutterFlowTheme
+                                                        .bodyText2
+                                                        .override(
+                                                      fontFamily:
+                                                          'Source Sans Pro',
+                                                      color: FlutterFlowTheme
+                                                          .tertiaryColor,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                                  ),
                                                 ),
-                                              ),
-                                            )
-                                          ],
-                                        ),
+                                                Expanded(
+                                                  child: AutoSizeText(
+                                                    'currentPrice',
+                                                    style: FlutterFlowTheme
+                                                        .bodyText2
+                                                        .override(
+                                                      fontFamily:
+                                                          'Source Sans Pro',
+                                                      color: FlutterFlowTheme
+                                                          .primaryColor,
+                                                      fontSize: 14,
+                                                      fontWeight:
+                                                          FontWeight.normal,
+                                                    ),
+                                                  ),
+                                                )
+                                              ],
+                                            ),
+                                          ),
+                                          Text(
+                                            'Hello World',
+                                            style: FlutterFlowTheme.bodyText2
+                                                .override(
+                                              fontFamily: 'Source Sans Pro',
+                                              color:
+                                                  FlutterFlowTheme.primaryColor,
+                                              fontSize: 14,
+                                              fontWeight: FontWeight.bold,
+                                            ),
+                                          )
+                                        ],
                                       ),
-                                      Text(
-                                        'Hello World',
-                                        style:
-                                            FlutterFlowTheme.bodyText2.override(
-                                          fontFamily: 'Source Sans Pro',
-                                          color: FlutterFlowTheme.primaryColor,
-                                          fontSize: 14,
-                                          fontWeight: FontWeight.bold,
-                                        ),
-                                      )
-                                    ],
+                                    ),
                                   ),
                                 ),
-                              ),
+                                Icon(
+                                  Icons.arrow_forward_ios,
+                                  color: FlutterFlowTheme.tertiaryColor,
+                                  size: 24,
+                                )
+                              ],
                             ),
-                            Icon(
-                              Icons.arrow_forward_ios,
-                              color: FlutterFlowTheme.tertiaryColor,
-                              size: 24,
-                            )
-                          ],
+                          ),
                         ),
                       ),
-                    ),
-                  ),
-                )
-              ],
+                    );
+                  },
+                );
+              },
             ),
           )
         ],

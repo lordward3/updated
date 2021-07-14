@@ -308,7 +308,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                                               (r) => false,
                                             );
                                           },
-                                          text: 'Sign in with Google',
+                                          text: 'Sign up with Google',
                                           icon: Icon(
                                             Icons.add,
                                             color: Colors.transparent,
@@ -358,7 +358,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                                 onPressed: () {
                                   print('Button pressed ...');
                                 },
-                                text: 'Sign in with Apple',
+                                text: 'Sign up with Apple',
                                 icon: FaIcon(
                                   FontAwesomeIcons.apple,
                                   size: 20,
@@ -394,7 +394,7 @@ class _CreateAccountPageWidgetState extends State<CreateAccountPageWidget> {
                                         onPressed: () {
                                           print('Button pressed ...');
                                         },
-                                        text: 'Login with Facebook',
+                                        text: 'Sign up with Facebook',
                                         icon: Icon(
                                           Icons.add,
                                           color: Colors.transparent,

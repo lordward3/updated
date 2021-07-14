@@ -1,11 +1,10 @@
 import '../auth/auth_util.dart';
-import '../backend/api_requests/api_calls.dart';
-import '../department_highlights_page/department_highlights_page_widget.dart';
+import '../backend/backend.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login_page/login_page_widget.dart';
-import '../search_results_page/search_results_page_widget.dart';
+import '../test/test_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -428,23 +427,10 @@ class _HomeIndexPageWidgetState extends State<HomeIndexPageWidget> {
                               child: Row(
                                 mainAxisSize: MainAxisSize.max,
                                 children: [
-                                  InkWell(
-                                    onTap: () async {
-                                      await Navigator.push(
-                                        context,
-                                        MaterialPageRoute(
-                                          builder: (context) =>
-                                              SearchResultsPageWidget(
-                                            searchTerm: textController.text,
-                                          ),
-                                        ),
-                                      );
-                                    },
-                                    child: Icon(
-                                      Icons.search,
-                                      color: Colors.black,
-                                      size: 24,
-                                    ),
+                                  Icon(
+                                    Icons.search,
+                                    color: Colors.black,
+                                    size: 24,
                                   ),
                                   Expanded(
                                     child: Padding(
@@ -504,53 +490,95 @@ class _HomeIndexPageWidgetState extends State<HomeIndexPageWidget> {
                         Divider(
                           height: 10,
                         ),
-                        GridView(
-                          padding: EdgeInsets.zero,
-                          gridDelegate:
-                              SliverGridDelegateWithFixedCrossAxisCount(
-                            crossAxisCount: 2,
-                            crossAxisSpacing: 10,
-                            mainAxisSpacing: 10,
-                            childAspectRatio: 1.6,
+                        StreamBuilder<List<IndicesRecord>>(
+                          stream: queryIndicesRecord(
+                            queryBuilder: (indicesRecord) =>
+                                indicesRecord.orderBy('index'),
+                            limit: 10,
                           ),
-                          primary: false,
-                          shrinkWrap: true,
-                          scrollDirection: Axis.vertical,
-                          children: [
-                            Card(
-                              clipBehavior: Clip.antiAliasWithSaveLayer,
-                              color: Colors.white,
-                              elevation: 4,
-                              shape: RoundedRectangleBorder(
-                                borderRadius: BorderRadius.circular(8),
+                          builder: (context, snapshot) {
+                            // Customize what your widget looks like when it's loading.
+                            if (!snapshot.hasData) {
+                              return Center(child: CircularProgressIndicator());
+                            }
+                            List<IndicesRecord> gridViewIndicesRecordList =
+                                snapshot.data;
+                            // Customize what your widget looks like with no query results.
+                            if (snapshot.data.isEmpty) {
+                              return Container(
+                                height: 100,
+                                child: Center(
+                                  child: Text('No results.'),
+                                ),
+                              );
+                            }
+                            return GridView.builder(
+                              padding: EdgeInsets.zero,
+                              gridDelegate:
+                                  SliverGridDelegateWithFixedCrossAxisCount(
+                                crossAxisCount: 2,
+                                crossAxisSpacing: 10,
+                                mainAxisSpacing: 10,
+                                childAspectRatio: 1.6,
                               ),
-                              child: Column(
-                                mainAxisSize: MainAxisSize.max,
-                                children: [
-                                  Row(
-                                    mainAxisSize: MainAxisSize.max,
-                                    children: [
-                                      Align(
-                                        alignment: Alignment(0, 0),
-                                        child: Padding(
-                                          padding:
-                                              EdgeInsets.fromLTRB(10, 30, 5, 0),
-                                          child: Text(
-                                            'indexName',
-                                            textAlign: TextAlign.center,
-                                            style: FlutterFlowTheme.title1
-                                                .override(
-                                              fontFamily: 'Montserrat',
-                                            ),
-                                          ),
+                              primary: false,
+                              shrinkWrap: true,
+                              scrollDirection: Axis.vertical,
+                              itemCount: gridViewIndicesRecordList.length,
+                              itemBuilder: (context, gridViewIndex) {
+                                final gridViewIndicesRecord =
+                                    gridViewIndicesRecordList[gridViewIndex];
+                                return InkWell(
+                                  onTap: () async {
+                                    await Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => TestWidget(
+                                          indexParam:
+                                              gridViewIndicesRecord.index,
                                         ),
-                                      )
-                                    ],
-                                  )
-                                ],
-                              ),
-                            )
-                          ],
+                                      ),
+                                    );
+                                  },
+                                  child: Card(
+                                    clipBehavior: Clip.antiAliasWithSaveLayer,
+                                    color: Colors.white,
+                                    elevation: 4,
+                                    shape: RoundedRectangleBorder(
+                                      borderRadius: BorderRadius.circular(8),
+                                    ),
+                                    child: Column(
+                                      mainAxisSize: MainAxisSize.max,
+                                      children: [
+                                        Row(
+                                          mainAxisSize: MainAxisSize.max,
+                                          mainAxisAlignment:
+                                              MainAxisAlignment.center,
+                                          children: [
+                                            Align(
+                                              alignment: Alignment(0, 0),
+                                              child: Padding(
+                                                padding: EdgeInsets.fromLTRB(
+                                                    10, 30, 10, 0),
+                                                child: Text(
+                                                  gridViewIndicesRecord.index,
+                                                  textAlign: TextAlign.center,
+                                                  style: FlutterFlowTheme.title1
+                                                      .override(
+                                                    fontFamily: 'Montserrat',
+                                                  ),
+                                                ),
+                                              ),
+                                            )
+                                          ],
+                                        )
+                                      ],
+                                    ),
+                                  ),
+                                );
+                              },
+                            );
+                          },
                         )
                       ],
                     ),

@@ -4,7 +4,7 @@ import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login_page/login_page_widget.dart';
-import '../test/test_widget.dart';
+import '../stocklist_page/stocklist_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -533,7 +533,8 @@ class _HomeIndexPageWidgetState extends State<HomeIndexPageWidget> {
                                     await Navigator.push(
                                       context,
                                       MaterialPageRoute(
-                                        builder: (context) => TestWidget(
+                                        builder: (context) =>
+                                            StocklistPageWidget(
                                           indexParam:
                                               gridViewIndicesRecord.index,
                                         ),

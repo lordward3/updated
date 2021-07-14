@@ -146,8 +146,7 @@ class _StocklistPageWidgetState extends State<StocklistPageWidget> {
             child: StreamBuilder<List<TickersRecord>>(
               stream: queryTickersRecord(
                 queryBuilder: (tickersRecord) =>
-                    tickersRecord.where('index', isEqualTo: widget.indexParam),
-                limit: 10,
+                    tickersRecord.orderBy('ticker'),
               ),
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.

@@ -41,7 +41,7 @@ class _IndividualStockPageWidgetState extends State<IndividualStockPageWidget> {
           ),
         ),
         title: Text(
-          getJsonField(widget.artPiece, r'$.ticker').toString(),
+          'Hello World',
           style: FlutterFlowTheme.bodyText2.override(
             fontFamily: 'Source Sans Pro',
             color: FlutterFlowTheme.secondaryColor,

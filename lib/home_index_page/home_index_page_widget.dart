@@ -494,7 +494,6 @@ class _HomeIndexPageWidgetState extends State<HomeIndexPageWidget> {
                           stream: queryIndicesRecord(
                             queryBuilder: (indicesRecord) =>
                                 indicesRecord.orderBy('index'),
-                            limit: 10,
                           ),
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.

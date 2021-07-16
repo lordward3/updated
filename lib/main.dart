@@ -36,8 +36,12 @@ class _MyAppState extends State<MyApp> {
       theme: ThemeData(primarySwatch: Colors.blue),
       home: initialUser == null
           ? const Center(
-              child: CircularProgressIndicator(
-                valueColor: AlwaysStoppedAnimation<Color>(Color(0xff4b39ef)),
+              child: SizedBox(
+                width: 50,
+                height: 50,
+                child: CircularProgressIndicator(
+                  color: FlutterFlowTheme.primaryColor,
+                ),
               ),
             )
           : currentUser.loggedIn
@@ -89,11 +93,11 @@ class _NavBarPageState extends State<NavBarPage> {
           ),
           BottomNavigationBarItem(
             icon: Icon(
-              Icons.favorite_border,
+              Icons.save_alt_rounded,
               size: 26,
             ),
             activeIcon: Icon(
-              Icons.favorite,
+              Icons.save_alt_outlined,
               size: 26,
             ),
             label: 'Home',

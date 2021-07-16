@@ -1,4 +1,7 @@
+import '../art_piece_page/art_piece_page_widget.dart';
+import '../backend/api_requests/api_calls.dart';
 import '../backend/backend.dart';
+import '../flutter_flow/flutter_flow_drop_down_template.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../individual_stock_page/individual_stock_page_widget.dart';
@@ -20,6 +23,7 @@ class StocklistPageWidget extends StatefulWidget {
 }
 
 class _StocklistPageWidgetState extends State<StocklistPageWidget> {
+  String dropDownValue;
   TextEditingController textController;
   final scaffoldKey = GlobalKey<ScaffoldState>();
 
@@ -143,6 +147,42 @@ class _StocklistPageWidgetState extends State<StocklistPageWidget> {
               )
             ],
           ),
+          Padding(
+            padding: EdgeInsets.fromLTRB(0, 5, 0, 5),
+            child: Row(
+              mainAxisSize: MainAxisSize.max,
+              children: [
+                Padding(
+                  padding: EdgeInsets.fromLTRB(150, 0, 0, 0),
+                  child: Text(
+                    'sort by :',
+                    style: FlutterFlowTheme.title3.override(
+                      fontFamily: 'Lato',
+                    ),
+                  ),
+                ),
+                FlutterFlowDropDown(
+                  initialOption: 'Name',
+                  options: ['Name', 'Type', 'CurrentPrice'],
+                  onChanged: (value) {
+                    setState(() => dropDownValue = value);
+                  },
+                  width: 130,
+                  height: 35,
+                  textStyle: FlutterFlowTheme.bodyText1.override(
+                    fontFamily: 'Source Sans Pro',
+                    color: Colors.black,
+                  ),
+                  fillColor: Colors.white,
+                  elevation: 2,
+                  borderColor: Colors.transparent,
+                  borderWidth: 0,
+                  borderRadius: 0,
+                  margin: EdgeInsets.fromLTRB(8, 4, 8, 4),
+                )
+              ],
+            ),
+          ),
           Expanded(
             child: StreamBuilder<List<TickersRecord>>(
               stream: queryTickersRecord(
@@ -153,7 +193,15 @@ class _StocklistPageWidgetState extends State<StocklistPageWidget> {
               builder: (context, snapshot) {
                 // Customize what your widget looks like when it's loading.
                 if (!snapshot.hasData) {
-                  return Center(child: CircularProgressIndicator());
+                  return Center(
+                    child: SizedBox(
+                      width: 50,
+                      height: 50,
+                      child: CircularProgressIndicator(
+                        color: FlutterFlowTheme.primaryColor,
+                      ),
+                    ),
+                  );
                 }
                 List<TickersRecord> listViewTickersRecordList = snapshot.data;
                 // Customize what your widget looks like with no query results.
@@ -264,7 +312,7 @@ class _StocklistPageWidgetState extends State<StocklistPageWidget> {
                                               ),
                                             ),
                                             Text(
-                                              'Hello World',
+                                              'stock type',
                                               style: FlutterFlowTheme.bodyText2
                                                   .override(
                                                 fontFamily: 'Source Sans Pro',

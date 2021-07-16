@@ -1,9 +1,11 @@
 import '../auth/auth_util.dart';
 import '../backend/backend.dart';
+import '../department_highlights_page/department_highlights_page_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
 import '../flutter_flow/flutter_flow_widgets.dart';
 import '../login_page/login_page_widget.dart';
+import '../search_results_page/search_results_page_widget.dart';
 import '../stocklist_page/stocklist_page_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
@@ -498,7 +500,15 @@ class _HomeIndexPageWidgetState extends State<HomeIndexPageWidget> {
                           builder: (context, snapshot) {
                             // Customize what your widget looks like when it's loading.
                             if (!snapshot.hasData) {
-                              return Center(child: CircularProgressIndicator());
+                              return Center(
+                                child: SizedBox(
+                                  width: 50,
+                                  height: 50,
+                                  child: CircularProgressIndicator(
+                                    color: FlutterFlowTheme.primaryColor,
+                                  ),
+                                ),
+                              );
                             }
                             List<IndicesRecord> gridViewIndicesRecordList =
                                 snapshot.data;

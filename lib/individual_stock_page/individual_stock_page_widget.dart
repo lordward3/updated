@@ -1,3 +1,5 @@
+import '../auth/auth_util.dart';
+import '../backend/backend.dart';
 import '../components/buy_sell_call_widget.dart';
 import '../flutter_flow/flutter_flow_theme.dart';
 import '../flutter_flow/flutter_flow_util.dart';
@@ -104,7 +106,7 @@ class _IndividualStockPageWidgetState extends State<IndividualStockPageWidget> {
                                   'previousClose',
                                   style: FlutterFlowTheme.subtitle1.override(
                                     fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.tertiaryColor,
+                                    color: Color(0xFF303030),
                                   ),
                                 ),
                               ),
@@ -115,7 +117,7 @@ class _IndividualStockPageWidgetState extends State<IndividualStockPageWidget> {
                                 '\$.price',
                                 style: FlutterFlowTheme.subtitle1.override(
                                   fontFamily: 'Open Sans',
-                                  color: FlutterFlowTheme.tertiaryColor,
+                                  color: Color(0xFF303030),
                                 ),
                               ),
                             )
@@ -133,6 +135,7 @@ class _IndividualStockPageWidgetState extends State<IndividualStockPageWidget> {
                                     'currentPrice',
                                     style: FlutterFlowTheme.title3.override(
                                       fontFamily: 'Lato',
+                                      color: FlutterFlowTheme.tertiaryColor,
                                     ),
                                   ),
                                 ),
@@ -143,6 +146,7 @@ class _IndividualStockPageWidgetState extends State<IndividualStockPageWidget> {
                                   '\$.price',
                                   style: FlutterFlowTheme.title3.override(
                                     fontFamily: 'Lato',
+                                    color: FlutterFlowTheme.tertiaryColor,
                                   ),
                                 ),
                               )
@@ -164,6 +168,7 @@ class _IndividualStockPageWidgetState extends State<IndividualStockPageWidget> {
                                   'High',
                                   style: FlutterFlowTheme.title3.override(
                                     fontFamily: 'Lato',
+                                    color: FlutterFlowTheme.tertiaryColor,
                                   ),
                                 ),
                               ),
@@ -174,6 +179,7 @@ class _IndividualStockPageWidgetState extends State<IndividualStockPageWidget> {
                                 '\$.price',
                                 style: FlutterFlowTheme.title3.override(
                                   fontFamily: 'Lato',
+                                  color: FlutterFlowTheme.tertiaryColor,
                                 ),
                               ),
                             )
@@ -191,7 +197,7 @@ class _IndividualStockPageWidgetState extends State<IndividualStockPageWidget> {
                                     'Low',
                                     style: FlutterFlowTheme.subtitle1.override(
                                       fontFamily: 'Open Sans',
-                                      color: FlutterFlowTheme.tertiaryColor,
+                                      color: Color(0xFF303030),
                                     ),
                                   ),
                                 ),
@@ -202,7 +208,7 @@ class _IndividualStockPageWidgetState extends State<IndividualStockPageWidget> {
                                   '\$.price',
                                   style: FlutterFlowTheme.subtitle1.override(
                                     fontFamily: 'Open Sans',
-                                    color: FlutterFlowTheme.tertiaryColor,
+                                    color: Color(0xFF303030),
                                   ),
                                 ),
                               )

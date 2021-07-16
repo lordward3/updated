@@ -17,12 +17,16 @@ abstract class TickersRecord
   String get index;
 
   @nullable
+  String get type;
+
+  @nullable
   @BuiltValueField(wireName: kDocumentReferenceField)
   DocumentReference get reference;
 
   static void _initializeBuilder(TickersRecordBuilder builder) => builder
     ..ticker = ''
-    ..index = '';
+    ..index = ''
+    ..type = '';
 
   static CollectionReference get collection =>
       FirebaseFirestore.instance.collection('tickers');
@@ -44,9 +48,11 @@ abstract class TickersRecord
 Map<String, dynamic> createTickersRecordData({
   String ticker,
   String index,
+  String type,
 }) =>
     serializers.toFirestore(
         TickersRecord.serializer,
         TickersRecord((t) => t
           ..ticker = ticker
-          ..index = index));
+          ..index = index
+          ..type = type));

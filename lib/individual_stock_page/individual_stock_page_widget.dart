@@ -43,7 +43,7 @@ class _IndividualStockPageWidgetState extends State<IndividualStockPageWidget> {
           ),
         ),
         title: Text(
-          'Hello World',
+          'Index',
           style: FlutterFlowTheme.bodyText2.override(
             fontFamily: 'Source Sans Pro',
             color: FlutterFlowTheme.secondaryColor,
